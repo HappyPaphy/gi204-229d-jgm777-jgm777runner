@@ -79,6 +79,10 @@ public class PlayerController : MonoBehaviour
                 playerState = PlayerState.Run;
             }
         }
+        else
+        {
+            playerState = PlayerState.Idle;
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
         {
