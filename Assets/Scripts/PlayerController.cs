@@ -26,8 +26,15 @@ public class PlayerController : MonoBehaviour
 
     private bool isOnGround = true;
 
+    [SerializeField] private bool isPlayerInCannon = false;
+    public bool IsPlayerInCannon { get { return isPlayerInCannon; } set { isPlayerInCannon = value; } }
+
+    public static PlayerController instance;
+
     void Start()
     {
+        instance = this;
+
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         SpriteRenderer sprRndr = GetComponent<SpriteRenderer>();
         Animator playerAnim = GetComponent<Animator>();
@@ -38,12 +45,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         ChooseAnimation();
-        
+        PlayerMovement();
     }
 
     private void FixedUpdate()
     {
-        PlayerMovement();
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -64,7 +71,7 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerMovement()
     {
-        if (isOnGround)
+        if (isOnGround && !isPlayerInCannon)
         {
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
