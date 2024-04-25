@@ -41,15 +41,15 @@ public class PlayerController : MonoBehaviour
         PlayerMovement();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground")
         {
             isOnGround = true;
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
@@ -59,35 +59,30 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerMovement()
     {
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (isOnGround)
         {
-            sprRndr.flipX = true;
-            rb.AddForce(Vector2.left * playerMoveSpeed);
-
-            if (isOnGround)
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
+                sprRndr.flipX = true;
+                rb.AddForce(Vector2.left * playerMoveSpeed);
                 playerState = PlayerState.Run;
             }
-        }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            sprRndr.flipX = false;
-            rb.AddForce(Vector2.right * playerMoveSpeed);
-
-            if (isOnGround)
+            else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
+                sprRndr.flipX = false;
+                rb.AddForce(Vector2.right * playerMoveSpeed);
                 playerState = PlayerState.Run;
             }
-        }
-        else
-        {
-            playerState = PlayerState.Idle;
-        }
+            else
+            {
+                playerState = PlayerState.Idle;
+            }
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            playerState = PlayerState.Jump;
-            rb.AddForce(Vector2.up * playerJumpForce);
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                playerState = PlayerState.Jump;
+                rb.AddForce(Vector2.up * playerJumpForce);
+            }
         }
     }
 
