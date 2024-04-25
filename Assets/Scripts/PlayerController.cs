@@ -38,6 +38,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         ChooseAnimation();
+        
+    }
+
+    private void FixedUpdate()
+    {
         PlayerMovement();
     }
 
@@ -64,13 +69,15 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
                 sprRndr.flipX = true;
-                rb.AddForce(Vector2.left * playerMoveSpeed);
+                rb.velocity = new Vector2(-1 * playerMoveSpeed, rb.velocity.y);
+                //rb.AddForce(Vector2.left * playerMoveSpeed);
                 playerState = PlayerState.Run;
             }
             else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
                 sprRndr.flipX = false;
-                rb.AddForce(Vector2.right * playerMoveSpeed);
+                rb.velocity = new Vector2(1 * playerMoveSpeed, rb.velocity.y);
+                //rb.AddForce(Vector2.right * playerMoveSpeed);
                 playerState = PlayerState.Run;
             }
             else
@@ -81,8 +88,18 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
             {
                 playerState = PlayerState.Jump;
-                rb.AddForce(Vector2.up * playerJumpForce);
+                rb.velocity = new Vector2(rb.velocity.x, playerJumpForce);
+                //rb.AddForce(Vector2.up * playerJumpForce);
             }
+        }
+        else
+        {
+            /*if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                playerState = PlayerState.Jump;
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+                //rb.AddForce(Vector2.up * playerJumpForce);
+            }*/
         }
     }
 
