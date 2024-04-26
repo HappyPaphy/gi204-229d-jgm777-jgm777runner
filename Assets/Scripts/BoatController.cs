@@ -38,6 +38,8 @@ public class BoatController : MonoBehaviour
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         SpriteRenderer sprRndr = GetComponent<SpriteRenderer>();
 
+
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
         sprRndr.flipX = false;
 
         colorBoatAlpha = 0.3f;
@@ -55,6 +57,11 @@ public class BoatController : MonoBehaviour
             colorBoatAlpha = 1f;
         }
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            num_BoatPart++;
+        }
+        
         BoatEnterAndExit();
         BoatMovement();
     }
@@ -119,6 +126,9 @@ public class BoatController : MonoBehaviour
             gameObj_ExitBoat.SetActive(true);
             spriteKeyboard_A.SetActive(true);
             spriteKeyboard_D.SetActive(true);
+
+            rb.constraints = RigidbodyConstraints2D.None;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
         else if(num_BoatPart == 5 && !isPlayerInBoat)
         {
