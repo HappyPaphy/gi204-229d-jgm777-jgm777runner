@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.LightAnchor;
 
 public enum PlayerState
 {
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float playerMoveSpeed;
     [SerializeField] private float playerJumpForce;
+    [SerializeField] private float cannonShootForce;
 
     [SerializeField] private PlayerState playerState;
     [SerializeField] private Animator playerAnim;
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
+            rb.rotation = 0f;
             isOnGround = true;
         }
     }
@@ -108,6 +111,11 @@ public class PlayerController : MonoBehaviour
                 //rb.AddForce(Vector2.up * playerJumpForce);
             }*/
         }
+    }
+
+    public void ShootCannon()
+    {
+        rb.AddForce(transform.up * cannonShootForce, ForceMode2D.Impulse);
     }
 
     private void ChooseAnimation()

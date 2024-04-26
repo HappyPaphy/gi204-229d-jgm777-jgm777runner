@@ -4,29 +4,43 @@ using UnityEngine;
 
 public class BackgroundParallax : MonoBehaviour
 {
-    private float length, startPosition;
+    private float length, startPositionX, startPositionY;
     public GameObject cam1;
     public float parallaxEffect;
 
     void Start()
     {
-        startPosition = transform.position.x;
+        startPositionX = transform.position.x;
+        startPositionY = transform.position.y;
         length = GetComponent<SpriteRenderer>().bounds.size.x;
+        length = GetComponent<SpriteRenderer>().bounds.size.y;
     }
 
     void Update()
     {
-        float temp = (cam1.transform.position.x * (1 - parallaxEffect));
-        float dist = (cam1.transform.position.x * parallaxEffect);
-        transform.position = new Vector3(startPosition + dist, transform.position.y, transform.position.z);
+        float tempX = (cam1.transform.position.x * (1 - parallaxEffect));
+        float distX = (cam1.transform.position.x * parallaxEffect);
+        float tempY = (cam1.transform.position.y * (parallaxEffect -1));
+        float distY = (cam1.transform.position.y * parallaxEffect);
 
-        if (temp > startPosition * length)
+        transform.position = new Vector3(startPositionX + distX, startPositionY - distY, transform.position.z);
+
+        if (tempX > startPositionX * length)
         {
-            startPosition += length;
+            startPositionX += length;
         }
-        else if (temp < startPosition - length)
+        else if (tempX < startPositionX - length)
         {
-            startPosition -= length;
+            startPositionX -= length;
+        }
+
+        if (tempY > startPositionY * length)
+        {
+            startPositionY += length;
+        }
+        else if (tempY < startPositionY - length)
+        {
+            startPositionY -= length;
         }
     }
 }
