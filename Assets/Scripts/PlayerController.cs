@@ -28,8 +28,8 @@ public class PlayerController : MonoBehaviour
 
     private bool isOnGround = true;
 
-    [SerializeField] private bool isPlayerInCannon = false;
-    public bool IsPlayerInCannon { get { return isPlayerInCannon; } set { isPlayerInCannon = value; } }
+    [SerializeField] private bool isPlayerInVehicle = false;
+    public bool IsPlayerInVehicle { get { return isPlayerInVehicle; } set { isPlayerInVehicle = value; } }
 
     public static PlayerController instance;
 
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerMovement()
     {
-        if (isOnGround && !isPlayerInCannon)
+        if (isOnGround && !isPlayerInVehicle)
         {
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {

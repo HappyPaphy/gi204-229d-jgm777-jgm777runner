@@ -28,7 +28,6 @@ public class CannonController : MonoBehaviour
 
     [SerializeField] private float cannonRotateSpeed = 1f;
 
-
     [SerializeField] private GameObject player;
 
     void Start()
@@ -44,9 +43,12 @@ public class CannonController : MonoBehaviour
     void Update()
     {
         ChooseAnimation();
+        CannonMovement();
+        CannonEnterAndShoot();
+    }
 
-
-
+    private void CannonEnterAndShoot()
+    {
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
         {
             if (!isPlayerInCannon)
@@ -61,7 +63,7 @@ public class CannonController : MonoBehaviour
                 cannonState = CannonState.Shoot;
 
                 PlayerController.instance.ShootCannon();
-                PlayerController.instance.IsPlayerInCannon = false;
+                PlayerController.instance.IsPlayerInVehicle = false;
 
                 StartCoroutine(CannonShootEffectCoroutine());
                 text_EnterCannon.SetActive(true);
@@ -71,13 +73,16 @@ public class CannonController : MonoBehaviour
             }
         }
         else
-        { 
+        {
             cannonState = CannonState.Idle;
         }
+    } 
 
+    private void CannonMovement()
+    {
         if (isPlayerInCannon)
         {
-            PlayerController.instance.IsPlayerInCannon = true;
+            PlayerController.instance.IsPlayerInVehicle = true;
 
             player.transform.position = cannonBarrelPosition.transform.position;
             player.transform.rotation = cannonBarrelPosition.transform.rotation;
