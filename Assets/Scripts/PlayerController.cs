@@ -33,6 +33,13 @@ public class PlayerController : MonoBehaviour
 
     public static PlayerController instance;
 
+    [SerializeField] private int curHP;
+    public int CurHP { get { return curHP; } set { curHP = value; } }
+
+    [SerializeField] public int maxHP = 100;
+    public int MaxHP { get { return maxHP; } set { maxHP = value; } }
+
+
     void Start()
     {
         instance = this;
@@ -61,6 +68,16 @@ public class PlayerController : MonoBehaviour
         {
             rb.rotation = 0f;
             isOnGround = true;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Water") && !isPlayerInVehicle)
+        {
+            curHP -= 1;
+            rb.mass = 7f;
+            Debug.Log("Player Dying");
         }
     }
 
