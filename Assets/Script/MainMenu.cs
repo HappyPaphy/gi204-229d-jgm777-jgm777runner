@@ -18,7 +18,10 @@ public class MainMenu : MonoBehaviour
     [Header("Tutorial")]
     [SerializeField] private Button button_TutorialUI;
     [SerializeField] private Button button_BackTutorialUI;
-    [SerializeField] private GameObject tutorialUI;
+    [SerializeField] private GameObject blackBlurBackGround;
+    [SerializeField] private GameObject[] tutorialUIArray;
+    [SerializeField] private int tutorialUIIndex;
+
 
     [Header("Quit")]
     [SerializeField] private Button button_QuitUI;
@@ -37,9 +40,9 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
-        if (tutorialUI != null)
+        if (tutorialUIArray != null)
         {
-            tutorialUI.SetActive(false);
+            CloseAllTutorialUI();
         }
 
         if (creditUI != null)
@@ -72,6 +75,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
+        soundManager.UIClickSound();
         SceneChanger.instance.ChangeScene("PlayScene");
     }
 
@@ -92,14 +96,20 @@ public class MainMenu : MonoBehaviour
         uiManager.OpenUI(creditUI, false);
     }
 
-    public void OpenTutorialUI()
+    public void OpenTutorialUI(int i)
     {
-        uiManager.OpenUI(tutorialUI, true);
+        CloseAllTutorialUI();
+        uiManager.OpenUI(tutorialUIArray[i], true);
+        blackBlurBackGround.SetActive(true);
     }
 
-    public void CloseTutorialUI()
+    public void CloseAllTutorialUI()
     {
-        uiManager.OpenUI(tutorialUI, false);
+        blackBlurBackGround.SetActive(false);
+        foreach (GameObject tutorialUI in tutorialUIArray)
+        {
+            tutorialUI.SetActive(false);
+        }
     }
 
     public void OpenSettingUI()

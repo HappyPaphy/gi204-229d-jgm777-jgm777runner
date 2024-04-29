@@ -43,6 +43,7 @@ public class SimpleCollectibleScript : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.E) && isPlayerInRange)
         {
+            SoundManager.instance.CollectItemSound();
             Collect();
         }
 

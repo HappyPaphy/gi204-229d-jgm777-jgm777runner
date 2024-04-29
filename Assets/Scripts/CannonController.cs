@@ -53,14 +53,15 @@ public class CannonController : MonoBehaviour
         {
             if (!isPlayerInCannon)
             {
-                isPlayerInCannon = true;
-
                 text_EnterCannon.SetActive(false);
                 text_ShootCannon.SetActive(true);
+
+                isPlayerInCannon = true;
             }
             else
             {
                 cannonState = CannonState.Shoot;
+                SoundManager.instance.CannonShootSound();
 
                 PlayerController.instance.ShootCannon();
                 PlayerController.instance.IsPlayerInVehicle = false;

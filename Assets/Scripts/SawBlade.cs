@@ -31,6 +31,7 @@ public class SawBlade : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            SoundManager.instance.PlayerHurtSound();
             PlayerController.instance.CurHP -= 20;
             PlayerController.instance.GetComponent<Rigidbody2D>().AddForce(transform.up * sawBladeForce, ForceMode2D.Impulse);
             PlayerController.instance.GetComponent<Rigidbody2D>().AddForce(transform.right * fallBackRightDirection * sawBladeForce, ForceMode2D.Impulse);

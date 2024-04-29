@@ -186,10 +186,11 @@ public class BoatController : MonoBehaviour
 
     private void CraftBoat()
     {
-        if(Input.GetKeyDown(KeyCode.R))
+        if(Input.GetKeyDown(KeyCode.E))
         {
             if (collectibleManager.Num_BoatPart > 0)
             {
+                SoundManager.instance.CraftItemSound();
                 collectibleManager.Num_BoatPart--;
                 num_CurBoatPart++;
 
@@ -198,6 +199,14 @@ public class BoatController : MonoBehaviour
                     isBoatFinished = true;
                 }
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Water")
+        {
+            SoundManager.instance.WaterSound();
         }
     }
 
